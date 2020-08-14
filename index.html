@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>TSAI-Mars</title>
+		<style>
+			.blink {
+				animation: blinker 1s linear infinite;
+				<!-- color: #1c87c9; -->
+				<!-- font-size: 30px; -->
+				font-weight: bold;
+				<!-- font-family: sans-serif; -->
+			}
+			@keyframes blinker {
+				50% {
+				  opacity: 0;
+				}
+			}
+			
+			.tab {
+				overflow: hidden;
+				border: 1px solid #ccc;
+				background-color: #333333;
+				
+			}
+
+			/* Style the buttons inside the tab */
+			.tab button {
+				background-color: inherit;
+				float: left;
+				border: none;
+				outline: none;
+				animation: fadeEffect 1s;
+				cursor: pointer;
+				padding: 14px 16px;
+				transition: 0.3s;
+				font-size: 17px;
+				color: white
+			}
+
+			@keyframes fadeEffect {
+				from {opacity: 0;}
+				to {opacity: 1;}
+			}
+			/* Change background color of buttons on hover */
+			.tab button:hover {
+				background-color: #999999;
+				color: white
+			}
+
+			/* Create an active/current tablink class */
+			.tab button.active {
+				background-color: #4CAF50;
+				color: white
+			}
+
+			/* Style the tab content */
+			.tabcontent {
+				display: none;
+				padding: 6px 12px;
+				border: 1px solid #ccc;
+				border-top: none;
+				
+			}
+		</style>
+	</head>
+	<body style="background-color:#e6dfdf;">
+		<div class="tab">
+			<button class="tablinks" onclick="openPage(event, 'classify')" id="defaultOpen">Classify Image</button>
+			<button class="tablinks" onclick="openPage(event, 'align')">Face Alignment</button>
+			<button class="tablinks" onclick="openPage(event, 'about')">About</button>
+		</div>	
+		
+		<div id="classify" class="tabcontent">
+			<div class="grid-x grid-margin-x" style="margin-top:2%;padding-left:8px">
+				<div class="large-12 cell">
+				<h3 id="imageClassifiers" >Image Classifiers</h3>
+				</div>
+				</br>
+				<div style="display: flex;"  >
+					<button id="warmup" onclick=start() >Warm up Lambda</button>&emsp;
+					<div id="load" style="color:red; font-weight: bold;" >&#8592; Click here to Warm up Lambda</div>
+					<div id="preNum" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="countdown" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="postNum" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="up" style="color:green;font-weight: bold;"></div>
+				</div></br>
+				</br>
+				<div class="large-4 cell" >
+					<label for="=FileUpload">Please choose image file you want to classify : </label>
+					<input type="file" id="FileUpload">
+				</div></br>
+				<div class="large-4 cell" > 
+					<button onclick="uploadAndClassifyImage('resnet')">Classify Image(Imagenet)</button>
+					<button onclick="uploadAndClassifyImage('custom')">Classify Image(Custom)</button>
+					<!-- <input type="button" id="btnResNetUpload" class="button"	value="Classify Image(Imagenet)"> -->
+					<!-- <input type="button" id="btnCustomUpload" class="button"	value="Classify Image(Custom)"> -->
+					<!-- <div> -->
+					<!-- <p id="result"></p> -->
+					<!-- </div> -->
+					</br></br></br>
+					<div>
+						<div><h4 id="pred" style="color:#5E0DEC; font-weight: bold; "></h4></div>
+						<div id="class" style="color:#5E0DEC; font-weight: bold; "></div></br> 
+						<div id="label" style="color:#5E0DEC; font-weight: bold; "></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="align" class="tabcontent">
+			<h2>Work in Progress. Please come back later. Thanks!!</h2>
+		</div>
+		<div id="about" class="tabcontent">
+			<h4>Thanks for visiting..</h4>
+			<p>Created for TSAI front end.</p>
+			<p>- Team Mars</p>
+		</div>
+	</body>
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="upload.js"></script>
+</html>
