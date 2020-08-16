@@ -63,6 +63,65 @@ function uploadAndClassifyImage(model) {
 };
 
 
+function alignFace() {
+	var fileInput = document.getElementById('alignFileUpload').files; 
+	if (!fileInput.length) {
+	return alert('Please choose a file to upload first.')};
+	
+	var endPointUrl = 'https://5oaxa974n2.execute-api.ap-south-1.amazonaws.com/dev/alignFace';
+
+	var file = fileInput[0]; 
+	var filename= file.name
+
+	var formData = new FormData(); 
+	formData.append(filename, file);
+	
+	console.log(filename);
+	console.log(endPointUrl);
+	console.log(formData);
+	
+	// Clear Output
+	document.getElementById("alignedImage").innerHTML = "";
+	document.getElementById("forwardArrow").innerHTML = "";
+	document.getElementById("inputImage").src = "";
+
+	$.ajax({
+		async: true,
+		CrossDomain: true, 
+		method: 'POST',
+		url: endPointUrl, 
+		data: formData,
+		processData: false, 
+		contentType: false, 
+		mimeType: "multipart/form-data",
+	})
+	.done(function (response, statusText, xhr) {
+		console.log(response);
+		console.log(statusText);
+		console.log(xhr.status);
+		var obj = JSON.parse(response)
+		switch(xhr.status){
+			case 200:
+				var b64Image = obj.aligned;
+				var binImage = atob(b64Image);
+				var elem = document.createElement("img");
+				elem.style.width = "300px";
+				elem.style.height = "300px";
+				elem.src = "data:image/jpg;base64,"+b64Image;
+				document.getElementById("inputImage").src = window.URL.createObjectURL(file) ;
+				document.getElementById("forwardArrow").innerHTML = "</br></br></br>   &#8658";
+				document.getElementById("alignedImage").append(elem);
+				break;
+			
+			case 202:
+				document.getElementById("alignedImage").innerHTML = obj.error;
+				break;
+		}
+	})
+	.fail(function() {alert ("There was an error while sending prediction request."); });
+};
+
+
 function warmUpLambda(model) {
 	var fileInput = NaN
 	switch(model){
@@ -71,6 +130,9 @@ function warmUpLambda(model) {
 			break;
 		case 'custom':
 			var endPointUrl = 'https://wmbnuq57u2.execute-api.ap-south-1.amazonaws.com/dev/classify';
+			break;
+		case 'align':
+			var endPointUrl = 'https://5oaxa974n2.execute-api.ap-south-1.amazonaws.com/dev/alignFace';
 			break;
 		default:
 			var endPointUrl = 'https://ell7ii8jq4.execute-api.ap-south-1.amazonaws.com/dev/classify';
@@ -120,16 +182,34 @@ function callback(){
 	document.getElementById('preNum').innerHTML = ""
 	document.getElementById('countdown').innerHTML = ""
 	document.getElementById('postNum').innerHTML = ""
+    document.getElementById('up1').innerHTML="Lambda should be up now"
+	document.getElementById('preNum1').innerHTML = ""
+	document.getElementById('countdown1').innerHTML = ""
+	document.getElementById('postNum1').innerHTML = ""
 }
-async function start(){
-	await Promise.all([warmUpLambda('resnet'), warmUpLambda('custom')]);
-	document.getElementById('load').innerHTML = ""
-	document.getElementById('preNum').innerHTML = "Warming up Lambda. Please wait &nbsp"
-	document.getElementById('countdown').innerHTML = 40
-	document.getElementById('postNum').innerHTML = "&nbsp Seconds .."
-	document.getElementById('up').innerHTML=""
+async function warmupX(page){
+	if (page == 'classify'){
+		var elemID = 'countdown'
+		await Promise.all([warmUpLambda('resnet'), warmUpLambda('custom')]);
+		document.getElementById('load').innerHTML = ""
+		document.getElementById('preNum').innerHTML = "Warming up Lambda. Please wait &nbsp"
+		document.getElementById(elemID).innerHTML = 40
+		document.getElementById('postNum').innerHTML = "&nbsp Seconds .."
+		document.getElementById('up').innerHTML=""
+		
+	}
+	else if (page == 'align'){
+		var elemID = 'countdown1'
+		await Promise.all([warmUpLambda('align')]);
+		document.getElementById('load1').innerHTML = ""
+		document.getElementById('preNum1').innerHTML = "Warming up Lambda. Please wait &nbsp"
+		document.getElementById(elemID).innerHTML = 40
+		document.getElementById('postNum1').innerHTML = "&nbsp Seconds .."
+		document.getElementById('up1').innerHTML=""
+	}
+	
     function decrease_count(){
-        var div = document.getElementById('countdown');
+        var div = document.getElementById(elemID);
         if( --div.innerHTML == 0 ) {
             clearInterval(timer)
             callback();

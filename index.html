@@ -75,10 +75,11 @@
 			<div class="grid-x grid-margin-x" style="margin-top:2%;padding-left:8px">
 				<div class="large-12 cell">
 				<h3 id="imageClassifiers" >Image Classifiers</h3>
+				
 				</div>
 				</br>
 				<div style="display: flex;"  >
-					<button id="warmup" onclick=start() >Warm up Lambda</button>&emsp;
+					<button id="warmup" onclick=warmupX('classify') >Warm up Lambda</button>&emsp;
 					<div id="load" style="color:red; font-weight: bold;" >&#8592; Click here to Warm up Lambda</div>
 					<div id="preNum" style="color:orange; font-weight: bold;" class="blink"></div>
 					<div id="countdown" style="color:orange; font-weight: bold;" class="blink"></div>
@@ -109,7 +110,42 @@
 		</div>
 		
 		<div id="align" class="tabcontent">
-			<h2>Work in Progress. Please come back later. Thanks!!</h2>
+			<div class="grid-x grid-margin-x" style="margin-top:2%;padding-left:8px">
+				<div class="large-12 cell">
+				<h3> Align Single face</h3>
+				<p>Please Upload image with only one face in it. </br>If you upload an Image of a group of people, Aligner will align and show the most prominent face.</p>
+				</div>
+				</br>
+				<div style="display: flex;"  >
+					<button id="warmup" onclick=warmupX('align') >Warm up Lambda</button>&emsp;
+					<div id="load1" style="color:red; font-weight: bold;" >&#8592; Click here to Warm up Lambda</div>
+					<div id="preNum1" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="countdown1" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="postNum1" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="up1" style="color:green;font-weight: bold;"></div>
+				</div></br>
+				</br>
+				<div class="large-4 cell" >
+					<label for="=alignFileUpload">Please choose image file you want to Align : </label>
+					<input type="file" id="alignFileUpload">
+				</div></br>
+				<div class="large-4 cell" > 
+					<button onclick="alignFace()">Align Face</button>
+					<!-- <input type="button" id="btnResNetUpload" class="button"	value="Classify Image(Imagenet)"> -->
+					<!-- <input type="button" id="btnCustomUpload" class="button"	value="Classify Image(Custom)"> -->
+					<!-- <div> -->
+					<!-- <p id="result"></p> -->
+					<!-- </div> -->
+					</br></br></br>
+					<div>
+						<div style="display: flex;"><h4 id="alignFixedText" style="color:#5E0DEC; font-weight: bold; "></h4>
+							<img id='inputImage' style="height:300px;">
+							<div id="forwardArrow" style=" font-weight: bold; font-size: 40px;" ></div>
+							<div id="alignedImage" style=" font-weight: bold; font-size: 24px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="about" class="tabcontent">
 			<h4>Thanks for visiting..</h4>
