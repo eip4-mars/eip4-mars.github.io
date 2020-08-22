@@ -55,7 +55,8 @@ function uploadAndClassifyImage(model) {
 		var obj = JSON.parse(response)
 		console.log(obj.label)
 		console.log(obj.predicted)
-		document.getElementById('pred').textContent = "Prediction : ";
+		document.getElementById('pred').innerHTML = "Prediction : </br></br> <u>Input Image</u>";
+		document.getElementById("inputImageClassify").src = window.URL.createObjectURL(file);
 		document.getElementById('class').textContent = "Predicted class : "+obj.predicted;
 		document.getElementById('label').textContent = "Prediction Label : "+obj.label;
 	})
@@ -177,15 +178,19 @@ function warmUpLambda(model) {
 // console.log(atob(b64data));
 // console.log(b64data);
 
-function callback(){
-    document.getElementById('up').innerHTML="Lambda should be up now"
-	document.getElementById('preNum').innerHTML = ""
-	document.getElementById('countdown').innerHTML = ""
-	document.getElementById('postNum').innerHTML = ""
-    document.getElementById('up1').innerHTML="Lambda should be up now"
-	document.getElementById('preNum1').innerHTML = ""
-	document.getElementById('countdown1').innerHTML = ""
-	document.getElementById('postNum1').innerHTML = ""
+function callback(page){
+	if (page == 'classify'){
+		document.getElementById('up').innerHTML="Lambda should be up now"
+		document.getElementById('preNum').innerHTML = ""
+		document.getElementById('countdown').innerHTML = ""
+		document.getElementById('postNum').innerHTML = ""
+	}
+	else if (page == 'align'){
+		document.getElementById('up1').innerHTML="Lambda should be up now"
+		document.getElementById('preNum1').innerHTML = ""
+		document.getElementById('countdown1').innerHTML = ""
+		document.getElementById('postNum1').innerHTML = ""
+	}
 }
 async function warmupX(page){
 	if (page == 'classify'){
@@ -208,11 +213,11 @@ async function warmupX(page){
 		document.getElementById('up1').innerHTML=""
 	}
 	
-    function decrease_count(){
+    function decrease_count(page){
         var div = document.getElementById(elemID);
         if( --div.innerHTML == 0 ) {
             clearInterval(timer)
-            callback();
+            callback(page);
         }
     }
     var timer = setInterval(decrease_count, 1000);
