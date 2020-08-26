@@ -62,13 +62,24 @@
 				border-top: none;
 				
 			}
+            ul {
+                width:400px;
+                list-style-type: none;
+                columns: 2;
+                -webkit-columns: 2;
+                -moz-columns: 2;
+            }
+            li:before {
+                content: "• ";
+            }
 		</style>
 	</head>
 	<body style="background-color:#e6dfdf;">
 		<div class="tab">
-			<button class="tablinks" onclick="openPage(event, 'classify')" id="defaultOpen">Classify Image</button>
-			<button class="tablinks" onclick="openPage(event, 'align')">Face Alignment</button>
-			<button class="tablinks" onclick="openPage(event, 'about')">About</button>
+			<a href='#classify'><button class="tablinks" onclick="openPage(event, 'classify')" id="defaultOpen">Classify Image</button></a>
+			<a href='#align'><button class="tablinks" onclick="openPage(event, 'align')">Face Alignment</button></a>
+			<a href='#fr'><button class="tablinks" onclick="openPage(event, 'fr')">Face Recognition</button></a>
+			<a href='#about'><button class="tablinks" onclick="openPage(event, 'about')">About</button></a>
 		</div>	
 		
 		<div id="classify" class="tabcontent">
@@ -119,7 +130,7 @@
 				</div>
 				</br>
 				<div style="display: flex;"  >
-					<button id="warmup" onclick=warmupX('align') >Warm up Lambda</button>&emsp;
+					<button id="warmup1" onclick=warmupX('align') >Warm up Lambda</button>&emsp;
 					<div id="load1" style="color:red; font-weight: bold;" >&#8592; Click here to Warm up Lambda</div>
 					<div id="preNum1" style="color:orange; font-weight: bold;" class="blink"></div>
 					<div id="countdown1" style="color:orange; font-weight: bold;" class="blink"></div>
@@ -144,6 +155,52 @@
 							<img id='inputImage' style="height:300px;">
 							<div id="forwardArrow" style=" font-weight: bold; font-size: 40px;" ></div>
 							<div id="alignedImage" style=" font-weight: bold; font-size: 24px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+		<div id="fr" class="tabcontent">
+			<div class="grid-x grid-margin-x" style="margin-top:2%;padding-left:8px">
+				<div class="large-12 cell">
+				<h3> Face rcognition for Selected Classes.</h3>
+				<p>Please Upload image of one of the following Persons. </br>There should be only the same person in the image and he/she should have a frontal face in the image.</p>
+                <ul>
+                <li>AB de Villiers</li>
+                <li>Dale Steyn</li>
+                <li>MS Dhoni</li>
+                <li>Sara Ali Khan</li>
+                <li>Dominic Thiem</li>
+                <li>Nick Kyrgios</li>
+                <li>Smriti Mandhana</li>
+                <li>Tom Holland</li>
+                <li>Benedict Cumberbatch</li>
+                <li>Millie Bobby Brown</li>
+                </ul>
+				</div>
+				</br>
+				<div style="display: flex;"  >
+					<button id="warmup2" onclick=warmupX('fr') >Warm up Lambda</button>&emsp;
+					<div id="load2" style="color:red; font-weight: bold;" >&#8592; Click here to Warm up Lambda</div>
+					<div id="preNum2" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="countdown2" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="postNum2" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="up2" style="color:green;font-weight: bold;"></div>
+				</div></br>
+				</br>
+				<div class="large-4 cell" >
+					<label for="frFileUpload">Please choose image file : </label>
+					<input type="file" id="frFileUpload">
+				</div></br>
+				<div class="large-4 cell" > 
+					<button onclick="fr()">Recognize Person</button>
+					</br></br></br>
+					<div>
+						<div><h4 id="frFixedText" style="color:#5E0DEC; font-weight: bold; "></h4>
+							<img id='frInputImage' style="height:300px;">
+                            
+							<div id="frPred" style=" font-weight: bold; font-size: 24px;"></div>
 						</div>
 					</div>
 				</div>
