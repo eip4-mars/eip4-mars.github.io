@@ -109,6 +109,10 @@ function alignFace() {
 				elem.style.width = "300px";
 				elem.style.height = "300px";
 				elem.src = "data:image/jpg;base64,"+b64Image;
+				document.getElementById('pred').innerHTML = "Prediction : </br></br> <u>Input Image</u>";
+				document.getElementById("inputImageClassify").src = window.URL.createObjectURL(file);
+				document.getElementById('class').textContent = "Predicted class : "+obj.predicted;
+				document.getElementById('label').textContent = "Prediction Label : "+obj.label;
 				document.getElementById("inputImage").src = window.URL.createObjectURL(file) ;
 				document.getElementById("forwardArrow").innerHTML = "</br></br></br>   &#8658";
 				document.getElementById("alignedImage").append(elem);
@@ -127,7 +131,7 @@ function fr(){
 	if (!fileInput.length) {
 	return alert('Please choose a file to upload first.')};
 	
-	var endPointUrl = 'https://5oaxa974n2.execute-api.ap-south-1.amazonaws.com/dev/alignFace';
+	var endPointUrl = 'https://0i59uu84a8.execute-api.ap-south-1.amazonaws.com/dev/face_rec1';
 
 	var file = fileInput[0]; 
 	var filename= file.name
@@ -142,9 +146,40 @@ function fr(){
     // Clear Output
 	document.getElementById("frInputImage").innerHTML = "";
 	document.getElementById("frPred").innerHTML = "";
-    document.getElementById("frInputImage").src = window.URL.createObjectURL(file);
-	document.getElementById("frPred").innerHTML = "</br></br>Predicted : MS_Dhoni";
+	
     
+	$.ajax({
+		async: true,
+		CrossDomain: true, 
+		method: 'POST',
+		url: endPointUrl, 
+		data: formData,
+		processData: false, 
+		contentType: false, 
+		mimeType: "multipart/form-data",
+	})
+	.done(function (response, statusText, xhr) {
+		console.log(response);
+		console.log(statusText);
+		console.log(xhr.status);
+		var obj = JSON.parse(response)
+		switch(xhr.status){
+			case 200:
+				document.getElementById("frInputImage").src = window.URL.createObjectURL(file) ;
+				if (obj.status == "Predicted"){
+					document.getElementById("frPred").innerHTML = "</br></br>Preddicted : "+ obj.label;
+				}
+				else{
+					document.getElementById("frPred").innerHTML = "</br></br>"+ obj.status;
+				}
+				break;
+			
+			case 202:
+				document.getElementById("frPred").innerHTML = obj.error;
+				break;
+		}
+	})
+	.fail(function() {alert ("There was an error while sending prediction request."); });
 }
 
 function warmUpLambda(model) {
