@@ -167,7 +167,7 @@ function fr(){
 			case 200:
 				document.getElementById("frInputImage").src = window.URL.createObjectURL(file) ;
 				if (obj.status == "Predicted"){
-					document.getElementById("frPred").innerHTML = "</br></br>Preddicted : "+ obj.label;
+					document.getElementById("frPred").innerHTML = "</br></br>Predicted : "+ obj.label;
 				}
 				else{
 					document.getElementById("frPred").innerHTML = "</br></br>"+ obj.status;
@@ -193,6 +193,9 @@ function warmUpLambda(model) {
 			break;
 		case 'align':
 			var endPointUrl = 'https://5oaxa974n2.execute-api.ap-south-1.amazonaws.com/dev/alignFace';
+			break;
+		case 'fr':
+			var endPointUrl = 'https://0i59uu84a8.execute-api.ap-south-1.amazonaws.com/dev/face_rec1';
 			break;
 		default:
 			var endPointUrl = 'https://ell7ii8jq4.execute-api.ap-south-1.amazonaws.com/dev/classify';
@@ -262,7 +265,7 @@ async function warmupX(page){
 	}
 	else if (page == 'fr'){
 		var elemID = 'countdown2'
-		// await Promise.all([warmUpLambda('fr')]);
+		await Promise.all([warmUpLambda('align'), warmUpLambda('fr')]);
 		document.getElementById('load2').innerHTML = ""
 		document.getElementById('preNum2').innerHTML = "Warming up Lambda. Please wait &nbsp"
 		document.getElementById(elemID).innerHTML = 40
