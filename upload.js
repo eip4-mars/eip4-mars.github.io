@@ -109,10 +109,6 @@ function alignFace() {
 				elem.style.width = "300px";
 				elem.style.height = "300px";
 				elem.src = "data:image/jpg;base64,"+b64Image;
-				document.getElementById('pred').innerHTML = "Prediction : </br></br> <u>Input Image</u>";
-				document.getElementById("inputImageClassify").src = window.URL.createObjectURL(file);
-				document.getElementById('class').textContent = "Predicted class : "+obj.predicted;
-				document.getElementById('label').textContent = "Prediction Label : "+obj.label;
 				document.getElementById("inputImage").src = window.URL.createObjectURL(file) ;
 				document.getElementById("forwardArrow").innerHTML = "</br></br></br>   &#8658";
 				document.getElementById("alignedImage").append(elem);
@@ -182,6 +178,64 @@ function fr(){
 	.fail(function() {alert ("There was an error while sending prediction request."); });
 }
 
+function hpe() {
+	var fileInput = document.getElementById('hpeFileUpload').files; 
+	if (!fileInput.length) {
+	return alert('Please choose a file to upload first.')};
+	
+	var endPointUrl = 'https://sejszmh528.execute-api.ap-south-1.amazonaws.com/dev/hpeLine';
+
+	var file = fileInput[0]; 
+	var filename= file.name
+
+	var formData = new FormData(); 
+	formData.append(filename, file);
+	
+	console.log(filename);
+	console.log(endPointUrl);
+	console.log(formData);
+	
+	// Clear Output
+	document.getElementById("hpeOutputImage").innerHTML = "";
+	document.getElementById("hpeForwardArrow").innerHTML = "";
+	document.getElementById("hpeInputImage").src = "";
+
+	$.ajax({
+		async: true,
+		CrossDomain: true, 
+		method: 'POST',
+		url: endPointUrl, 
+		data: formData,
+		processData: false, 
+		contentType: false, 
+		mimeType: "multipart/form-data",
+	})
+	.done(function (response, statusText, xhr) {
+		console.log(response);
+		console.log(statusText);
+		console.log(xhr.status);
+		var obj = JSON.parse(response)
+		switch(xhr.status){
+			case 200:
+				var b64Image = obj.aligned;
+				var binImage = atob(b64Image);
+				var elem = document.createElement("img");
+				// elem.style.width = "400px";
+				elem.style.height = "400px";
+				elem.src = "data:image/jpg;base64,"+b64Image;
+				document.getElementById("hpeInputImage").src = window.URL.createObjectURL(file) ;
+				document.getElementById("hpeForwardArrow").innerHTML = "</br></br></br>   &#8658";
+				document.getElementById("hpeOutputImage").append(elem);
+				break;
+			
+			case 202:
+				document.getElementById("hpeOutputImage").innerHTML = obj.error;
+				break;
+		}
+	})
+	.fail(function() {alert ("There was an error while sending Pose Estimation request."); });
+};
+
 function warmUpLambda(model) {
 	var fileInput = NaN
 	switch(model){
@@ -196,6 +250,9 @@ function warmUpLambda(model) {
 			break;
 		case 'fr':
 			var endPointUrl = 'https://0i59uu84a8.execute-api.ap-south-1.amazonaws.com/dev/face_rec1';
+			break;
+		case 'hpe':
+			var endPointUrl = 'https://sejszmh528.execute-api.ap-south-1.amazonaws.com/dev/hpeLine';
 			break;
 		default:
 			var endPointUrl = 'https://ell7ii8jq4.execute-api.ap-south-1.amazonaws.com/dev/classify';
@@ -242,6 +299,12 @@ function callback(page){
 		document.getElementById('countdown2').innerHTML = ""
 		document.getElementById('postNum2').innerHTML = ""
 	}
+	else if (page == 'hpe'){
+		document.getElementById('up3').innerHTML="Lambda should be up now"
+		document.getElementById('preNum3').innerHTML = ""
+		document.getElementById('countdown3').innerHTML = ""
+		document.getElementById('postNum3').innerHTML = ""
+	}
 }
 async function warmupX(page){
 	if (page == 'classify'){
@@ -271,6 +334,15 @@ async function warmupX(page){
 		document.getElementById(elemID).innerHTML = 40
 		document.getElementById('postNum2').innerHTML = "&nbsp Seconds .."
 		document.getElementById('up2').innerHTML=""
+	}
+	else if (page == 'hpe'){
+		var elemID = 'countdown3'
+		await Promise.all([warmUpLambda('hpe')]);
+		document.getElementById('load3').innerHTML = ""
+		document.getElementById('preNum3').innerHTML = "Warming up Lambda. Please wait &nbsp"
+		document.getElementById(elemID).innerHTML = 40
+		document.getElementById('postNum3').innerHTML = "&nbsp Seconds .."
+		document.getElementById('up3').innerHTML=""
 	}
 	
     console.log(elemID)
