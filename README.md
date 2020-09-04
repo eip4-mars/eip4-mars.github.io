@@ -63,3 +63,17 @@ This Link will classify only Following Image Classes: "Flying Birds", "Large Qua
 ---------
 ![](https://github.com/eip4-mars/EIP4P2/blob/master/Session4/fr_ss.jpg)
 
+
+## 6. Human Pose Estimation
+
+#### Steps:
+- Click on the [Link](http://www.tsaimars.com.s3-website.ap-south-1.amazonaws.com/)
+- Click on "Human Pose Estimation" on top Tab
+- Warmup lambda if needed by clicking "Warm Up Lambda" and wait ~40 Seconds for Lambda Function to be ready
+- Upload the File
+- Click on "Estimate Pose" Button
+
+#### Screenshot
+---------
+![](https://github.com/eip4-mars/EIP4P2/blob/master/Session5/hpe_UI.jpg)
+
