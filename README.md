@@ -77,3 +77,16 @@ This Link will classify only Following Image Classes: "Flying Birds", "Large Qua
 ---------
 ![](https://github.com/eip4-mars/EIP4P2/blob/master/Session5/hpe_UI.jpg)
 
+
+## 7. GAN(Car)
+
+#### Steps:
+- Click on the [Link](http://www.tsaimars.com.s3-website.ap-south-1.amazonaws.com/)
+- Click on GAN on top Tab
+- Warmup lambda if needed by clicking "Warm Up Lambda" and wait ~40 Seconds for Lambda Function to be ready
+- Click on "Generate Car Image" Button
+
+#### Screenshot
+---------
+![](https://github.com/eip4-mars/EIP4P2/blob/master/Session6/gan_car.jpg)
+
