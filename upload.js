@@ -236,6 +236,51 @@ function hpe() {
 	.fail(function() {alert ("There was an error while sending Pose Estimation request."); });
 };
 
+function gan() {
+	
+	var endPointUrl = 'https://gfz5a72nvh.execute-api.ap-south-1.amazonaws.com/dev/carGan';
+
+		
+	// Clear Output
+	document.getElementById("ganFixedText").innerHTML = "";
+	document.getElementById("ganOutImage").innerHTML = "";
+	
+	$.ajax({
+		async: true,
+		CrossDomain: true, 
+		method: 'POST',
+		url: endPointUrl, 
+		// data: formData,
+		processData: false, 
+		contentType: false, 
+		// mimeType: "multipart/form-data",
+	})
+	.done(function (response, statusText, xhr) {
+		console.log(JSON.stringify(response))
+		// console.log(statusText);
+		// console.log(xhr.status);
+		var obj = JSON.parse(JSON.stringify(response))
+		switch(xhr.status){
+			case 200:
+				var b64Image = obj.aligned;
+				var binImage = atob(b64Image);
+				var elem = document.createElement("img");
+				
+				elem.style.height = "200px";
+				elem.src = "data:image/jpg;base64,"+b64Image;
+				document.getElementById("ganFixedText").innerHTML = "Random Generated Car Image";
+				document.getElementById("ganOutImage").append(elem) ;
+				
+				break;
+			
+			case 202:
+				document.getElementById("ganOutImage").innerHTML = obj.error;
+				break;
+		}
+	})
+	.fail(function() {alert ("There was an error while sending Pose Estimation request."); });
+};
+
 function warmUpLambda(model) {
 	var fileInput = NaN
 	switch(model){
@@ -253,6 +298,9 @@ function warmUpLambda(model) {
 			break;
 		case 'hpe':
 			var endPointUrl = 'https://sejszmh528.execute-api.ap-south-1.amazonaws.com/dev/hpeLine';
+			break;
+		case 'hpe':
+			var endPointUrl = 'https://gfz5a72nvh.execute-api.ap-south-1.amazonaws.com/dev/carGan';
 			break;
 		default:
 			var endPointUrl = 'https://ell7ii8jq4.execute-api.ap-south-1.amazonaws.com/dev/classify';
@@ -305,6 +353,12 @@ function callback(page){
 		document.getElementById('countdown3').innerHTML = ""
 		document.getElementById('postNum3').innerHTML = ""
 	}
+	else if (page == 'gan'){
+		document.getElementById('up4').innerHTML="Lambda should be up now"
+		document.getElementById('preNum4').innerHTML = ""
+		document.getElementById('countdown4').innerHTML = ""
+		document.getElementById('postNum4').innerHTML = ""
+	}
 }
 async function warmupX(page){
 	if (page == 'classify'){
@@ -343,6 +397,15 @@ async function warmupX(page){
 		document.getElementById(elemID).innerHTML = 40
 		document.getElementById('postNum3').innerHTML = "&nbsp Seconds .."
 		document.getElementById('up3').innerHTML=""
+	}
+	else if (page == 'gan'){
+		var elemID = 'countdown4'
+		await Promise.all([warmUpLambda('gan')]);
+		document.getElementById('load4').innerHTML = ""
+		document.getElementById('preNum4').innerHTML = "Warming up Lambda. Please wait &nbsp"
+		document.getElementById(elemID).innerHTML = 40
+		document.getElementById('postNum4').innerHTML = "&nbsp Seconds .."
+		document.getElementById('up4').innerHTML=""
 	}
 	
     console.log(elemID)
