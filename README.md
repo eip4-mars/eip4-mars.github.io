@@ -90,3 +90,14 @@ This Link will classify only Following Image Classes: "Flying Birds", "Large Qua
 ---------
 ![](https://github.com/eip4-mars/EIP4P2/blob/master/Session6/gan_car.jpg)
 
+## 8.SR Gan(Drones)
+
+#### Steps:
+- Click on the [Link](http://www.tsaimars.com.s3-website.ap-south-1.amazonaws.com/)
+- Click on superResolution on top Tab
+- Warmup lambda if needed by clicking "Warm Up Lambda" and wait ~40 Seconds for Lambda Function to be ready
+- Click on "Generate SR Image" Button
+
+#### Screenshot
+---------
+![](https://github.com/eip4-mars/EIP4P2/blob/master/Session8/srgan.jpg)
