@@ -81,6 +81,7 @@
 			<a href='#fr'><button class="tablinks" onclick="openPage(event, 'fr')">Face Recognition</button></a>
 			<a href='#hpe'><button class="tablinks" onclick="openPage(event, 'hpe')">Human Pose Estimation</button></a>
 			<a href='#gan'><button class="tablinks" onclick="openPage(event, 'gan')">GAN</button></a>
+			<a href='#srgan'><button class="tablinks" onclick="openPage(event, 'srgan')">SuperResolution</button></a>
 			<a href='#about'><button class="tablinks" onclick="openPage(event, 'about')">About</button></a>
 		</div>	
 		
@@ -272,6 +273,41 @@
 			</div>
 		</div>
         
+		
+		<div id="srgan" class="tabcontent">
+			<div class="grid-x grid-margin-x" style="margin-top:2%;padding-left:8px">
+				<div class="large-12 cell">
+				<h3> Super Resolution</h3>
+				<p>Please Upload image of Large Quadcopter drone with preferably square shape and low resolution </br>
+					P.S : Both Input and output images will be resized to 400x400 for discplay below</p>
+				</div>
+				</br>
+				<div style="display: flex;"  >
+					<button id="warmup5" onclick=warmupX('srgan') >Warm up Lambda</button>&emsp;
+					<div id="load5" style="color:red; font-weight: bold;" >&#8592; Click here to Warm up Lambda</div>
+					<div id="preNum5" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="countdown5" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="postNum5" style="color:orange; font-weight: bold;" class="blink"></div>
+					<div id="up5" style="color:green;font-weight: bold;"></div>
+				</div></br>
+				</br>
+				<div class="large-4 cell" >
+					<label for="=srganFileUpload">Please choose image file : </label>
+					<input type="file" id="srganFileUpload">
+				</div></br>
+				<div class="large-4 cell" > 
+					<button onclick="srgan()">Generate SR Image</button>
+					</br></br></br>
+					<div>
+						<div style="display: flex;"><h4 id="srganFixedText" style="color:#5E0DEC; font-weight: bold; "></h4>
+							<img id='srganInputImage' style="height:400px;">
+							<div id="srganForwardArrow" style=" font-weight: bold; font-size: 40px;" ></div>
+							<div id="srganOutputImage" style="height:400px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		
 		<div id="about" class="tabcontent">

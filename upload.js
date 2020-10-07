@@ -281,6 +281,67 @@ function gan() {
 	.fail(function() {alert ("There was an error while sending Pose Estimation request."); });
 };
 
+
+function srgan() {
+	var fileInput = document.getElementById('srganFileUpload').files; 
+	if (!fileInput.length) {
+	return alert('Please choose a file to upload first.')};
+	
+	var endPointUrl = 'https://1rpqxivq4k.execute-api.ap-south-1.amazonaws.com/dev/superRes';
+
+	var file = fileInput[0]; 
+	var filename= file.name
+
+	var formData = new FormData(); 
+	formData.append(filename, file);
+	
+	console.log(filename);
+	console.log(endPointUrl);
+	console.log(formData);
+	
+	// Clear Output
+	document.getElementById("srganOutputImage").innerHTML = "";
+	document.getElementById("srganForwardArrow").innerHTML = "";
+	document.getElementById("srganInputImage").src = "";
+
+	$.ajax({
+		async: true,
+		CrossDomain: true, 
+		method: 'POST',
+		url: endPointUrl, 
+		data: formData,
+		processData: false, 
+		contentType: false, 
+		mimeType: "multipart/form-data",
+	})
+	.done(function (response, statusText, xhr) {
+		console.log(response);
+		console.log(statusText);
+		console.log(xhr.status);
+		var obj = JSON.parse(response)
+		switch(xhr.status){
+			case 200:
+				var b64Image = obj.sr;
+				var binImage = atob(b64Image);
+				var elem = document.createElement("img");
+				// elem.style.width = "400px";
+				elem.style.height = "400px";
+				elem.src = "data:image/jpg;base64,"+b64Image;
+				document.getElementById("srganInputImage").src = window.URL.createObjectURL(file) ;
+				document.getElementById("srganForwardArrow").innerHTML = "</br></br></br>   &#8658";
+				document.getElementById("srganOutputImage").append(elem);
+				break;
+			
+			case 202:
+				document.getElementById("srganOutputImage").innerHTML = obj.error;
+				break;
+		}
+	})
+	.fail(function() {alert ("There was an error while sending Super Resolution request."); });
+};
+
+
+
 function warmUpLambda(model) {
 	var fileInput = NaN
 	switch(model){
@@ -301,6 +362,9 @@ function warmUpLambda(model) {
 			break;
 		case 'hpe':
 			var endPointUrl = 'https://gfz5a72nvh.execute-api.ap-south-1.amazonaws.com/dev/carGan';
+			break;
+		case 'srgan':
+			var endPointUrl = 'https://1rpqxivq4k.execute-api.ap-south-1.amazonaws.com/dev/superRes';
 			break;
 		default:
 			var endPointUrl = 'https://ell7ii8jq4.execute-api.ap-south-1.amazonaws.com/dev/classify';
@@ -359,6 +423,12 @@ function callback(page){
 		document.getElementById('countdown4').innerHTML = ""
 		document.getElementById('postNum4').innerHTML = ""
 	}
+	else if (page == 'srgan'){
+		document.getElementById('up5').innerHTML="Lambda should be up now"
+		document.getElementById('preNum5').innerHTML = ""
+		document.getElementById('countdown5').innerHTML = ""
+		document.getElementById('postNum5').innerHTML = ""
+	}
 }
 async function warmupX(page){
 	if (page == 'classify'){
@@ -406,6 +476,15 @@ async function warmupX(page){
 		document.getElementById(elemID).innerHTML = 40
 		document.getElementById('postNum4').innerHTML = "&nbsp Seconds .."
 		document.getElementById('up4').innerHTML=""
+	}
+	else if (page == 'srgan'){
+		var elemID = 'countdown5'
+		await Promise.all([warmUpLambda('srgan')]);
+		document.getElementById('load5').innerHTML = ""
+		document.getElementById('preNum5').innerHTML = "Warming up Lambda. Please wait &nbsp"
+		document.getElementById(elemID).innerHTML = 40
+		document.getElementById('postNum5').innerHTML = "&nbsp Seconds .."
+		document.getElementById('up5').innerHTML=""
 	}
 	
     console.log(elemID)
