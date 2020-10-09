@@ -1,33 +1,35 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand mr-3" href="#">Navbar</a>
+  <a class="navbar-brand mr-3" routerLink="classigyImage">ImageNet</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link mr-2" href="#">Classify Image</a>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a class="nav-link mr-2" routerLink="classifyImage">Classify Image</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mr-2" href="#">Face Alignment</a>
+        <a class="nav-link mr-2" routerLink="faceAlignment">Face Alignment</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mr-2" href="#">Face Recognition</a>
+        <a class="nav-link mr-2" routerLink="faceRecognition">Face Recognition</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mr-2" href="#">Human Pose Estimation</a>
+        <a class="nav-link mr-2" routerLink="humanPoseEstimation">Human Pose Estimation</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mr-2" href="#">GAN</a>
+        <a class="nav-link mr-2" routerLink="gan">GAN</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mr-2" href="#">SuperResolution</a>
+        <a class="nav-link mr-2" routerLink="superResolution">SuperResolution</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mr-2" href="#">About</a>
+        <a class="nav-link mr-2" routerLink="about">About</a>
       </li>
     </ul>
   </div>
 </nav>
+
+<router-outlet></router-outlet>
