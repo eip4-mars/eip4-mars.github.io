@@ -9,6 +9,7 @@ import { HumanPoseEstimationComponent } from './components/human-pose-estimation
 import { GanComponent } from './components/gan/gan.component';
 import { SuperResolutionComponent } from './components/super-resolution/super-resolution.component';
 import { AboutComponent } from './components/about/about.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AboutComponent } from './components/about/about.component';
     AboutComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
