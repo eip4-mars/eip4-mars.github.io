@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'gan', component: GanComponent },
   { path: 'super-resolution', component: SuperResolutionComponent },
   { path: 'about', component: AboutComponent },
+  { path: '', redirectTo: '/classify-image', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
