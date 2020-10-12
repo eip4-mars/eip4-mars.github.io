@@ -10,6 +10,7 @@ import { GanComponent } from './components/gan/gan.component';
 import { SuperResolutionComponent } from './components/super-resolution/super-resolution.component';
 import { AboutComponent } from './components/about/about.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AppRoutingModule } from './app-routing.module';
     HumanPoseEstimationComponent,
     GanComponent,
     SuperResolutionComponent,
-    AboutComponent
+    AboutComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

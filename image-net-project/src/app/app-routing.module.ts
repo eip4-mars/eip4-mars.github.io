@@ -6,6 +6,7 @@ import { FaceAlignmentComponent } from './components/face-alignment/face-alignme
 import { FaceRecognitionComponent } from './components/face-recognition/face-recognition.component';
 import { GanComponent } from './components/gan/gan.component';
 import { HumanPoseEstimationComponent } from './components/human-pose-estimation/human-pose-estimation.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { SuperResolutionComponent } from './components/super-resolution/super-resolution.component';
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'human-pose-estimation', component: HumanPoseEstimationComponent },
   { path: 'gan', component: GanComponent },
   { path: 'super-resolution', component: SuperResolutionComponent },
-  { path: 'about', component: AboutComponent }
+  { path: 'about', component: AboutComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
