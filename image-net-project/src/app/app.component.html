@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand mr-3" routerLink="/classify-image">ImageNet</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a class="nav-link mr-2" routerLink="/classify-image">Classify Image</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mr-2" routerLink="/face-alignment">Face Alignment</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mr-2" routerLink="/face-recognition">Face Recognition</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mr-2" routerLink="/human-pose-estimation">Human Pose Estimation</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mr-2" routerLink="/gan">GAN</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mr-2" routerLink="/super-resolution">SuperResolution</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mr-2" routerLink="/about">About</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
